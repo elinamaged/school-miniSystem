@@ -16,6 +16,9 @@ public class Teacher extends User{
         if (!availableCourses.contains(course)) {
             availableCourses.add(course);
         }
+        else {
+            System.out.println("Course is already available");
+        }
     }
 
     public void setGrades(Student student, Course course, Double grade) {
