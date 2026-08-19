@@ -2,34 +2,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Student extends User{
-    private ArrayList<String> mycourses;
+    private  ArrayList<Course> mycourses;
+    private ArrayList<Grades>mygrades;
 
     //
-    private HashMap<String, Double> grades;
+    //private HashMap<String, Double> grades;
 
     public Student (String name, int id){
         super(name,id);
         mycourses = new ArrayList<>();
-        grades =new HashMap<>();
+        mygrades = new ArrayList<>();
+        //grades =new HashMap<>();
     }
 
-    public void accessGrade(String course, Double grade){
-        grades.put(course, grade);
+    public void accessGrade(Course course, Double grade){
+        mygrades.add(new Grades(course, grade));
     }
 
-    public void chooseCourse(String course){
-        if (Teacher.getAvailableCourses(). contains(course) && !(mycourses.contains(course))){
-            mycourses.add(course);
-            System.out.println(course + "successfully added");
+    public void chooseCourse(Course newcourse){
+        if (Teacher.getAvailableCourses(). contains(newcourse) && !(mycourses.contains(newcourse))){
+            mycourses.add(newcourse);
+            System.out.println(newcourse + "successfully added");
         }
         else {
             System.out.println("course not available");
         }
     }
 
-    public void displayGrades(Student student){
-        for (String course: grades.keySet()){
-            System.out.println(course+"   "+grades.get(course));
+    public boolean checkCourse(Course course){
+        return mycourses.contains(course);
+    }
+
+    public void displayGrades(){
+        for (Grades grade: mygrades){
+            System.out.println(grade.getCourse().getName() + "   "+grade.getCourse().getCode()
+                    +"    "+ grade.getGrade());
         }
     }
 

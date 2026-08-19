@@ -2,23 +2,31 @@ import java.util.ArrayList;
 
 public class Teacher extends User{
 
-    private static ArrayList<String> availableCourses=new ArrayList<>();
+    private static ArrayList<Course> availableCourses=new ArrayList<>();
 
     public Teacher (String name, int id){
         super(name,id);
     }
 
-    public void setcourse(String course){
-        availableCourses.add(course);
-    }
-
-    public static ArrayList<String> getAvailableCourses(){
+    public static ArrayList<Course> getAvailableCourses(){
         return availableCourses;
     }
 
-    public void setGrades(Student student, String course, Double grade){
+    public void setcourse(Course course) {
+        if (!availableCourses.contains(course)) {
+            availableCourses.add(course);
+        }
+    }
+
+    public void setGrades(Student student, Course course, Double grade) {
         //check first law course is enrolled -in mycourses
-        student.accessGrade(course, grade);
+        if (student.checkCourse(course)) {
+            student.accessGrade(course, grade);
+            System.out.println("Grade added Successfully!");
+        }
+        else{
+            System.out.println("Student is not enrolled to this course :(");
+        }
     }
 }
 
