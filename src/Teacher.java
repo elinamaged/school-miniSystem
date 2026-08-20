@@ -3,9 +3,11 @@ import java.util.ArrayList;
 public class Teacher extends User{
 
     private static ArrayList<Course> availableCourses=new ArrayList<>();
+    private String password;
 
-    public Teacher (String name, int id){
+    public Teacher (String name, int id,String password ){
         super(name,id);
+        this.password=password;
     }
 
     public static ArrayList<Course> getAvailableCourses(){
@@ -21,15 +23,23 @@ public class Teacher extends User{
         }
     }
 
-    public void setGrades(Student student, Course course, Double grade) {
+    public void setGrades(Student student, Course course, double grade) {
         //check first law course is enrolled -in mycourses
         if (student.checkCourse(course)) {
-            student.accessGrade(course, grade);
-            System.out.println("Grade added Successfully!");
+            if (grade<0 || grade>100){
+                System.out.println("invalid grade!!");
+            }else {
+                student.accessGrade(course, grade);
+                System.out.println("Grade added Successfully!");
+            }
         }
         else{
             System.out.println("Student is not enrolled to this course :(");
         }
+    }
+
+    public boolean checkPassword(String password){
+        return this.password.equals(password);
     }
 }
 

@@ -13,10 +13,26 @@ import java.util.ArrayList;
          return null;
      }
 
+     public static Teacher findteach(ArrayList<Teacher> teachers, int id) {
+
+         for (Teacher teacher : teachers) {
+             if (teacher.getId() == id) {
+                 return teacher;
+             }
+         }
+         return null;
+     }
+
      public static void main(String[] args) {
          Scanner scan = new Scanner(System.in);
 
          ArrayList<Student> students = new ArrayList<>();
+         ArrayList<Teacher> teachers=new ArrayList<>();
+
+         teachers.add(new Teacher("Guardiola", 100, "123"));
+         teachers.add(new Teacher("Mourinho", 101, "234"));
+         teachers.add(new Teacher("Simeone", 102, "345"));
+         teachers.add(new Teacher("Bielsa", 103, "456"));
 
 
          while (true) {
@@ -39,7 +55,19 @@ import java.util.ArrayList;
              int id = scan.nextInt();
 
              if (choice == 1) {
-                 Teacher teacher = new Teacher(name, id);
+                 System.out.println("Enter your password:");
+                 String password= scan.nextLine();
+                 Teacher teacher=findteach(teachers,id);
+
+                 if (teacher==null){
+                     System.out.println("Teacher not found");
+                 }
+                 else if(!teacher.checkPassword(password)){
+                     System.out.println("Incorrect password!");
+                 }
+                 else {
+                     System.out.println("welcome "+ teacher.getName());
+                 }
                  while (true) {
 
                      //teacher menu
@@ -49,6 +77,7 @@ import java.util.ArrayList;
                      System.out.println("To exit --> press 4");
 
                      int Tchoice = scan.nextInt();
+                     scan.nextLine();
                      if (Tchoice == 4) {
                          break;
                      }
@@ -56,7 +85,7 @@ import java.util.ArrayList;
                      if (Tchoice == 1) {
                          System.out.println("Enter Course name: ");
                          String courseName = scan.nextLine();
-                         System.out.println("Enter course");
+                         System.out.println("Enter course code");
                          String courseCode = scan.nextLine();
 
                          Course course = new Course(courseName, courseCode);
@@ -82,7 +111,7 @@ import java.util.ArrayList;
                                  }
                              }
                              if (selectedCourse == null) {
-                                 System.out.println("Student is not enrolled to this course");
+                                 System.out.println("Course not found");
                              } else {
                                  System.out.println("Enter Grade:");
                                  double grade = scan.nextDouble();
@@ -109,14 +138,33 @@ import java.util.ArrayList;
              else if (choice == 2) {
                  Student student = findStud(students, id);
                  if (student == null) {
-                     System.out.println("Student not found");
+                     System.out.println("Student not found.");
+                     System.out.println("Press 1 to retry login");
+                     System.out.println("Press 2 to create a new account");
+
+                     int option= scan.nextInt();
+                     scan.nextLine();
+                     if (option==1){
+                         continue;
+                     }
+                     else if (option==2) {
+
+                         student=new Student(name,id);
+                         students.add(student);
+                         System.out.println("Account created successfully");
+                     }
+                     else{
+                         System.out.println("Invalid Choice");
+                     }
                  } else {
+                     System.out.println("Hello "+ student.getName());
                      while (true) {
                          System.out.println("To choose courses--> press 1");
                          System.out.println("To display grades--> press 2");
                          System.out.println("To exit --> press 3");
 
                          int Schoice = scan.nextInt();
+                         scan.nextLine();
                          if (Schoice == 3) {
                              break;
                          }
@@ -138,6 +186,12 @@ import java.util.ArrayList;
                                      break;
                                  }
                              }
+                             if (selectedCourse == null) {
+                                 System.out.println("Course not found!");
+                             }
+                             else {
+                                 student.chooseCourse(selectedCourse);
+                             }
                          } else if (Schoice == 2) {
                              student.displayGrades();
                          } else {
@@ -145,12 +199,9 @@ import java.util.ArrayList;
                          }
                      }
                  }
-
              }
-
-
          }
-
      }
-
  }
+
+
