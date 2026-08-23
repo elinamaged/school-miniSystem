@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Teacher extends User{
 
-    private static ArrayList<Course> availableCourses=new ArrayList<>();
+    private static List<Course> availableCourses=new ArrayList<>();
     private String password;
 
     public Teacher (String name, int id,String password ){
@@ -10,7 +11,7 @@ public class Teacher extends User{
         this.password=password;
     }
 
-    public static ArrayList<Course> getAvailableCourses(){
+    public static List<Course> getAvailableCourses(){
         return availableCourses;
     }
 

@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Student extends User{
-    private  ArrayList<Course> mycourses;
-    private ArrayList<Grades>mygrades;
+    private  List<Course> mycourses;
+    private List<Grades> mygrades;
 
     //
     //private HashMap<String, Double> grades;
