@@ -42,5 +42,12 @@ public class Teacher extends User{
     public boolean checkPassword(String password){
         return this.password.equals(password);
     }
+
+    public static void addTeachers(List<Teacher> teachers){
+        teachers.add(new Teacher("Guardiola", 100, "123"));
+        teachers.add(new Teacher("Mourinho", 101, "234"));
+        teachers.add(new Teacher("Simeone", 102, "345"));
+        teachers.add(new Teacher("Bielsa", 103, "456"));
+    }
 }
 

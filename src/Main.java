@@ -28,13 +28,9 @@ import java.util.ArrayList;
          Scanner scan = new Scanner(System.in);
 
          List<Student> students = new ArrayList<>();
+
          List<Teacher> teachers = new ArrayList<>();
-
-         teachers.add(new Teacher("Guardiola", 100, "123"));
-         teachers.add(new Teacher("Mourinho", 101, "234"));
-         teachers.add(new Teacher("Simeone", 102, "345"));
-         teachers.add(new Teacher("Bielsa", 103, "456"));
-
+         Teacher.addTeachers(teachers);
 
          while (true) {
              //menu
