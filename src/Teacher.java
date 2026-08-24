@@ -4,11 +4,9 @@ import java.util.List;
 public class Teacher extends User{
 
     private static List<Course> availableCourses=new ArrayList<>();
-    private String password;
 
-    public Teacher (String name, int id,String password ){
-        super(name,id);
-        this.password=password;
+    public Teacher (String name, int id, String password ){
+        super(name,id,password);
     }
 
     public static List<Course> getAvailableCourses(){
@@ -40,7 +38,7 @@ public class Teacher extends User{
     }
 
     public boolean checkPassword(String password){
-        return this.password.equals(password);
+        return this.getPassword().equals(password);
     }
 
     public static List<Teacher> addTeachers(){

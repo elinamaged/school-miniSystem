@@ -9,8 +9,8 @@ public class Student extends User{
     //
     //private HashMap<String, Double> grades;
 
-    public Student (String name, int id){
-        super(name,id);
+    public Student (String name, int id, String password){
+        super(name,id,password);
         mycourses = new ArrayList<>();
         mygrades = new ArrayList<>();
         //grades =new HashMap<>();

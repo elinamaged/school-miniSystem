@@ -71,6 +71,8 @@ import java.util.ArrayList;
                    String name = scan.nextLine();
                    System.out.println("Enter your ID:  ");
                    int id = scan.nextInt();
+                   System.out.println("Enter your password: ");
+                   String password= scan.nextLine();
                    scan.nextLine();
 
                    Student student = FindStudent(students, id);
@@ -86,7 +88,7 @@ import java.util.ArrayList;
                                continue;
                            case 2:
 
-                               student = new Student(name, id);
+                               student = new Student(name, id,password);
                                students.add(student);
                                System.out.println("Account created successfully");
                                studentMenu(scan, student);
