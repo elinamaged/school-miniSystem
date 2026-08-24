@@ -2,7 +2,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
  public class Main {
      public static Student FindStudent(List<Student> students, int id) {
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
          return null;
      }
 
-     public static Teacher Findteacher(List<Teacher> teachers, int id) {
+     public static Teacher FindTeacher(List<Teacher> teachers, int id) {
 
          for (Teacher teacher : teachers) {
              if (teacher.getId() == id) {
@@ -28,9 +27,8 @@ import java.util.ArrayList;
          Scanner scan = new Scanner(System.in);
 
          List<Student> students = new ArrayList<>();
+         List<Teacher> teachers = Teacher.addTeachers();
 
-         List<Teacher> teachers = new ArrayList<>();
-         Teacher.addTeachers(teachers);
 
          while (true) {
              //menu
@@ -54,7 +52,7 @@ import java.util.ArrayList;
 
                    System.out.println("Enter your password:");
                    String password = scan.nextLine();
-                   Teacher teacher = Findteacher(teachers, id);
+                   Teacher teacher = FindTeacher(teachers, id);
 
                    if (teacher == null) {
                        System.out.println("Teacher not found");
@@ -131,8 +129,10 @@ import java.util.ArrayList;
                      String courseName = scan.nextLine();
                      System.out.println("Enter course code");
                      String courseCode = scan.nextLine();
+                     System.out.println("Enter course max grade: ");
+                     int maxGrade = scan.nextInt();
 
-                     Course course = new Course(courseName, courseCode);
+                     Course course = new Course(courseName, courseCode, maxGrade);
                      teacher.setcourse(course);
                      System.out.println("Course added Successfully");
                      break;

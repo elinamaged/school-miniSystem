@@ -27,7 +27,7 @@ public class Teacher extends User{
     public void setGrades(Student student, Course course, double grade) {
         //check first law course is enrolled -in mycourses
         if (student.checkCourse(course)) {
-            if (grade<0 || grade>100){
+            if (grade<0 || grade> course.getMaxGrade()){
                 System.out.println("invalid grade!!");
             }else {
                 student.accessGrade(course, grade);
@@ -43,11 +43,13 @@ public class Teacher extends User{
         return this.password.equals(password);
     }
 
-    public static void addTeachers(List<Teacher> teachers){
+    public static List<Teacher> addTeachers(){
+        List<Teacher> teachers = new ArrayList<Teacher>();
         teachers.add(new Teacher("Guardiola", 100, "123"));
         teachers.add(new Teacher("Mourinho", 101, "234"));
         teachers.add(new Teacher("Simeone", 102, "345"));
         teachers.add(new Teacher("Bielsa", 103, "456"));
+        return teachers;
     }
 }
 
