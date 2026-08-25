@@ -23,20 +23,19 @@ public class Teacher extends User{
     }
 
     public void setGrades(Student student, Course course, double grade) {
-        //check first law course is enrolled -in mycourses
-        if (student.checkCourse(course)) {
-            if (grade<0 || grade> course.getMaxGrade()){
-                System.out.println("invalid grade!!");
-            }else {
-                student.accessGrade(course, grade);
-                System.out.println("Grade added Successfully!");
+
+        if (EnrollmentDB.isEnrolled(student.getId(), course.getCode())) {
+
+            if (grade < 0 || grade > course.getMaxGrade()) {
+                System.out.println("Invalid grade!!");
+            } else {
+                System.out.println("Grade is valid!");
             }
-        }
-        else{
-            System.out.println("Student is not enrolled to this course :(");
+
+        } else {
+            System.out.println("Student is not enrolled in this course :(");
         }
     }
-
     public boolean checkPassword(String password){
         return this.getPassword().equals(password);
     }

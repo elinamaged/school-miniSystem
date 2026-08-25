@@ -2,205 +2,211 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
- public class Main {
-     public static Student FindStudent(List<Student> students, int id) {
+public class Main {
+    public static Student FindStudent(List<Student> students, int id) {
 
-         for (Student student : students) {
-             if (student.getId() == id) {
-                 return student;
-             }
-         }
-         return null;
-     }
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
 
-     public static Teacher FindTeacher(List<Teacher> teachers, int id) {
+    public static Teacher FindTeacher(List<Teacher> teachers, int id) {
 
-         for (Teacher teacher : teachers) {
-             if (teacher.getId() == id) {
-                 return teacher;
-             }
-         }
-         return null;
-     }
+        for (Teacher teacher : teachers) {
+            if (teacher.getId() == id) {
+                return teacher;
+            }
+        }
+        return null;
+    }
 
-     public static void main(String[] args) {
-         Scanner scan = new Scanner(System.in);
-
-         List<Student> students = new ArrayList<>();
-         List<Teacher> teachers = Teacher.addTeachers();
+    public static void main(String[] args) {
 
 
-         while (true) {
-             //menu
-             System.out.println("------------Welcome!------------");
-             System.out.println("If you are a teacher press 1");
-             System.out.println("If you are a student press 2");
-             System.out.println("If you are want to ext press 3");
 
-             int choice = scan.nextInt();
-             scan.nextLine();
+        Scanner scan = new Scanner(System.in);
 
-             switch (choice) {
-                 //teacher
-               case 1: {
+        List<Student> students = new ArrayList<>();
+        List<Teacher> teachers = TeacherDB.getAllTeachers();
 
-                   System.out.println("Enter your name:  ");
-                   String name = scan.nextLine();
-                   System.out.println("Enter your ID:  ");
-                   int id = scan.nextInt();
-                   scan.nextLine();
 
-                   System.out.println("Enter your password:");
-                   String password = scan.nextLine();
-                   Teacher teacher = FindTeacher(teachers, id);
+        while (true) {
+            //menu
+            System.out.println("------------Welcome!------------");
+            System.out.println("If you are a teacher press 1");
+            System.out.println("If you are a student press 2");
+            System.out.println("If you are want to ext press 3");
 
-                   if (teacher == null) {
-                       System.out.println("Teacher not found");
-                   } else if (!teacher.checkPassword(password)) {
-                       System.out.println("Incorrect password!");
-                   } else {
-                       System.out.println("welcome " + teacher.getName());
-                       teacherMenu(scan, teacher, students);
-                   }
-                   break;
-               }
+            int choice = scan.nextInt();
+            scan.nextLine();
 
-                 //student
-               case 2: {
-                   System.out.println("Enter your name:  ");
-                   String name = scan.nextLine();
-                   System.out.println("Enter your ID:  ");
-                   int id = scan.nextInt();
-                   System.out.println("Enter your password: ");
-                   String password= scan.nextLine();
-                   scan.nextLine();
+            switch (choice) {
+                //teacher
+                case 1: {
 
-                   Student student = FindStudent(students, id);
-                   if (student == null) {
-                       System.out.println("Student not found.");
-                       System.out.println("Press 1 to retry login");
-                       System.out.println("Press 2 to create a new account");
+                    System.out.println("Enter your name:  ");
+                    String name = scan.nextLine();
+                    System.out.println("Enter your ID:  ");
+                    int id = scan.nextInt();
+                    scan.nextLine();
 
-                       int option = scan.nextInt();
-                       scan.nextLine();
-                       switch (option) {
-                           case 1:
-                               continue;
-                           case 2:
+                    System.out.println("Enter your password:");
+                    String password = scan.nextLine();
+                    Teacher teacher = FindTeacher(teachers, id);
 
-                               student = new Student(name, id,password);
-                               students.add(student);
-                               System.out.println("Account created successfully");
-                               studentMenu(scan, student);
-                               break;
+                    if (teacher == null) {
+                        System.out.println("Teacher not found");
+                    } else if (!teacher.checkPassword(password)) {
+                        System.out.println("Incorrect password!");
+                    } else {
+                        System.out.println("welcome " + teacher.getName());
+                        teacherMenu(scan, teacher, students);
+                    }
+                    break;
+                }
 
-                           default:
-                               System.out.println("Invalid Choice");
-                       }
-                   } else {
-                       System.out.println("Hello " + student.getName());
-                       studentMenu(scan, student);
-                   }
-                   break;
-               }
-                 case 3:
-                     return;
+                //student
+                case 2: {
+                    System.out.println("Enter your name:  ");
+                    String name = scan.nextLine();
+                    System.out.println("Enter your ID:  ");
+                    int id = scan.nextInt();
+                    scan.nextLine();
+                    System.out.println("Enter your password: ");
+                    String password= scan.nextLine();
 
-                 default:
-                     System.out.println("Invalid Choice");
-             }
-         }
-     }
+                    Student student = StudentDB.findStudent(id);
+                    if (student == null) {
+                        System.out.println("Student not found.");
+                        System.out.println("Press 1 to retry login");
+                        System.out.println("Press 2 to create a new account");
 
-     public static void teacherMenu(Scanner scan, Teacher teacher, List<Student> students) {
-         while (true) {
+                        int option = scan.nextInt();
+                        scan.nextLine();
+                        switch (option) {
+                            case 1:
+                                continue;
+                            case 2:
 
-             //teacher menu
-             System.out.println("To set course--> press 1");
-             System.out.println("To set grades--> press 2");
-             System.out.println("To display grades--> press 3");
-             System.out.println("To exit --> press 4");
+                                student = new Student(name, id,password);
+                                students.add(student);
+                                StudentDB.addStudent(student);
+                                System.out.println("Account created successfully");
+                                studentMenu(scan, student);
+                                break;
 
-             int choice = scan.nextInt();
-             scan.nextLine();
+                            default:
+                                System.out.println("Invalid Choice");
+                        }
+                    } else {
+                        System.out.println("Hello " + student.getName());
+                        studentMenu(scan, student);
+                    }
+                    break;
+                }
+                case 3:
+                    return;
 
-             switch (choice) {
+                default:
+                    System.out.println("Invalid Choice");
+            }
+        }
+    }
 
-                 case 1: {
-                     System.out.println("Enter Course name: ");
-                     String courseName = scan.nextLine();
-                     System.out.println("Enter course code");
-                     String courseCode = scan.nextLine();
-                     System.out.println("Enter course max grade: ");
-                     int maxGrade = scan.nextInt();
+    public static void teacherMenu(Scanner scan, Teacher teacher, List<Student> students) {
+        while (true) {
 
-                     Course course = new Course(courseName, courseCode, maxGrade);
-                     teacher.setcourse(course);
-                     System.out.println("Course added Successfully");
-                     break;
-                 }
-                 case 2: {
-                     System.out.println("Enter Student ID: ");
-                     int studentId = scan.nextInt();
-                     scan.nextLine();
+            //teacher menu
+            System.out.println("To set course--> press 1");
+            System.out.println("To set grades--> press 2");
+            System.out.println("To display grades--> press 3");
+            System.out.println("To exit --> press 4");
 
-                     Student student = FindStudent(students, studentId);
-                     if (student == null) {
-                         System.out.println("Student not found!");
-                     } else {
-                         System.out.println("Enter course code:");
-                         String courseCode = scan.nextLine();
-                         Course selectedCourse = null;
+            int choice = scan.nextInt();
+            scan.nextLine();
 
-                         for (Course c : Teacher.getAvailableCourses()) {
-                             if (c.getCode().equals(courseCode)) {
-                                 selectedCourse = c;
-                                 break;
-                             }
-                         }
-                         if (selectedCourse == null) {
-                             System.out.println("Course not found");
-                         } else {
-                             System.out.println("Enter Grade:");
-                             double grade = scan.nextDouble();
-                             teacher.setGrades(student, selectedCourse, grade);
-                         }
-                     }
-                     break;
-                 }
-                 case 3: {
-                     System.out.println("Enter student ID");
-                     int studentId = scan.nextInt();
+            switch (choice) {
 
-                     Student student = FindStudent(students, studentId);
-                     if (student == null) {
-                         System.out.println("Student not found!");
-                     } else {
-                         System.out.println("Student name: " + student.getName());
-                         student.displayGrades();
-                     }
-                     break;
-                 }
-                 case 4:
-                     return;
-                 default: {
-                     System.out.println("Invalid choice!");
-                 }
-             }
-         }
-     }
+                case 1: {
+                    System.out.println("Enter Course name: ");
+                    String courseName = scan.nextLine();
+                    System.out.println("Enter course code");
+                    String courseCode = scan.nextLine();
+                    System.out.println("Enter course max grade: ");
+                    int maxGrade = scan.nextInt();
 
-     public static void studentMenu(Scanner scan, Student student) {
-         while (true) {
-             System.out.println("To choose courses--> press 1");
-             System.out.println("To display grades--> press 2");
-             System.out.println("To exit --> press 3");
+                    Course course = new Course(courseName, courseCode, maxGrade);
+                    CourseDB.addCourse(course, teacher.getId());
+                    System.out.println("Course added Successfully");
+                    break;
+                }
+                case 2: {
+                    System.out.println("Enter Student ID: ");
+                    int studentId = scan.nextInt();
+                    scan.nextLine();
 
-             int choice = scan.nextInt();
-             scan.nextLine();
+                    Student student = StudentDB.getStudent(studentId);
+                    if (student == null) {
+                        System.out.println("Student not found!");
+                    } else {
+                        System.out.println("Enter course code:");
+                        String courseCode = scan.nextLine();
+                        Course selectedCourse = null;
+
+                        List<Course> courses = CourseDB.getAllCourses();
+                        for (Course c : courses) {
+                            if (c.getCode().equals(courseCode)) {
+                                selectedCourse = c;
+                                break;
+                            }
+                        }
+                        if (selectedCourse == null) {
+                            System.out.println("Course not found");
+                        } else {
+                            System.out.println("Enter Grade:");
+                            double grade = scan.nextDouble();
+                            teacher.setGrades(student, selectedCourse, grade);
+                            EnrollmentDB.setGrade(student.getId(), selectedCourse.getCode(), grade);
+                        }
+                    }
+                    break;
+                }
+                case 3: {
+                    System.out.println("Enter student ID");
+                    int studentId = scan.nextInt();
+
+                    Student student = StudentDB.getStudent(studentId);
+                    if (student == null) {
+                        System.out.println("Student not found!");
+                    } else {
+                        System.out.println("Student name: " + student.getName());
+                        EnrollmentDB.displayGrades(student.getId());
+                    }
+                    break;
+                }
+                case 4:
+                    return;
+                default: {
+                    System.out.println("Invalid choice!");
+                }
+            }
+        }
+    }
+
+    public static void studentMenu(Scanner scan, Student student) {
+        while (true) {
+            System.out.println("To choose courses--> press 1");
+            System.out.println("To display grades--> press 2");
+            System.out.println("To exit --> press 3");
+
+            int choice = scan.nextInt();
+            scan.nextLine();
             switch (choice) {
                 case 1: {
-                    List<Course> courses = Teacher.getAvailableCourses();
+                    List<Course> courses = CourseDB.getAllCourses();
 
                     System.out.println("Available Courses:");
                     for (int i = 0; i < courses.size(); i++) {
@@ -211,7 +217,7 @@ import java.util.ArrayList;
                     String courseCode = scan.nextLine();
 
                     Course selectedCourse = null;
-                    for (Course c : Teacher.getAvailableCourses()) {
+                    for (Course c :  courses) {
                         if (c.getCode().equals(courseCode)) {
                             selectedCourse = c;
                             break;
@@ -221,11 +227,12 @@ import java.util.ArrayList;
                         System.out.println("Course not found!");
                     } else {
                         student.chooseCourse(selectedCourse);
+                        EnrollmentDB.enrollStudent(student.getId(), selectedCourse.getCode());
                     }
                     break;
                 }
                 case 2: {
-                    student.displayGrades();
+                    EnrollmentDB.displayGrades(student.getId());
                     break;
                 }
                 case 3:
@@ -234,8 +241,6 @@ import java.util.ArrayList;
                     System.out.println("Invalid Choice");
                 }
             }
-         }
-     }
- }
-
-
+        }
+    }
+}

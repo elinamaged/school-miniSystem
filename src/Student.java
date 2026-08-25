@@ -21,12 +21,12 @@ public class Student extends User{
     }
 
     public void chooseCourse(Course newcourse){
-        if (Teacher.getAvailableCourses(). contains(newcourse) && !(mycourses.contains(newcourse))){
+        if (!mycourses.contains(newcourse)){
             mycourses.add(newcourse);
-            System.out.println(newcourse + "successfully added");
+            System.out.println("Course successfully added");
         }
         else {
-            System.out.println("course not available");
+            System.out.println("Course already chosen");
         }
     }
 
